@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/tts-local-cli",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw local CLI TTS plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

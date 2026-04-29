@@ -1,0 +1,59 @@
+{
+  "name": "@theclaw/feishu",
+  "version": "2026.4.25",
+  "description": "TheClaw Feishu/Lark channel plugin (community maintained by @m1heng)",
+  "type": "module",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.62.0",
+    "typebox": "1.1.33"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "setupEntry": "./setup-entry.ts",
+    "channel": {
+      "id": "feishu",
+      "label": "Feishu",
+      "selectionLabel": "Feishu/Lark (飞书)",
+      "docsPath": "/channels/feishu",
+      "docsLabel": "feishu",
+      "blurb": "飞书/Lark enterprise messaging with doc/wiki/drive tools.",
+      "aliases": [
+        "lark"
+      ],
+      "order": 35,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@theclaw/feishu",
+      "defaultChoice": "npm",
+      "minHostVersion": ">=2026.4.25"
+    },
+    "compat": {
+      "pluginApi": ">=2026.4.25"
+    },
+    "build": {
+      "theclawVersion": "2026.4.25"
+    },
+    "bundle": {
+      "stageRuntimeDependencies": true
+    },
+    "release": {
+      "publishToClawHub": true,
+      "publishToNpm": true
+    }
+  }
+}

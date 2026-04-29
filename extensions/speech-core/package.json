@@ -1,0 +1,10 @@
+{
+  "name": "@theclaw/speech-core",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw speech runtime package",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  }
+}

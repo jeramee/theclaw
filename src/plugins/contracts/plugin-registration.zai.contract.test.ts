@@ -1,0 +1,4 @@
+import { pluginRegistrationContractCases } from "theclaw/plugin-sdk/plugin-test-contracts";
+import { describePluginRegistrationContract } from "theclaw/plugin-sdk/plugin-test-contracts";
+
+describePluginRegistrationContract(pluginRegistrationContractCases.zai);

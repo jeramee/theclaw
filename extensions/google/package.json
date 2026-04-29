@@ -1,0 +1,22 @@
+{
+  "name": "@theclaw/google-plugin",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Google plugin",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.50.1",
+    "@mariozechner/pi-ai": "0.70.5"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "bundle": {
+      "stageRuntimeDependencies": true
+    },
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

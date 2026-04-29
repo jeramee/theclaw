@@ -1,0 +1,24 @@
+{
+  "name": "@theclaw/diagnostics-prometheus",
+  "version": "2026.4.25",
+  "description": "TheClaw diagnostics Prometheus exporter",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.4.25"
+    },
+    "build": {
+      "theclawVersion": "2026.4.25"
+    },
+    "release": {
+      "publishToClawHub": true,
+      "publishToNpm": true
+    }
+  }
+}

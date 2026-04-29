@@ -1,0 +1,19 @@
+{
+  "name": "@theclaw/llm-task",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw JSON-only LLM task plugin",
+  "type": "module",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "typebox": "1.1.33"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

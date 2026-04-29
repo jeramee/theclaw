@@ -1,0 +1,45 @@
+{
+  "name": "@theclaw/line",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw LINE channel plugin",
+  "type": "module",
+  "dependencies": {
+    "@line/bot-sdk": "^11.0.0"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "setupEntry": "./setup-entry.ts",
+    "channel": {
+      "id": "line",
+      "label": "LINE",
+      "selectionLabel": "LINE (Messaging API)",
+      "detailLabel": "LINE Bot",
+      "docsPath": "/channels/line",
+      "docsLabel": "line",
+      "blurb": "LINE Messaging API webhook bot.",
+      "systemImage": "message",
+      "order": 75,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@theclaw/line",
+      "defaultChoice": "npm",
+      "minHostVersion": ">=2026.4.10"
+    }
+  }
+}

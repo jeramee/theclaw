@@ -1,0 +1,55 @@
+{
+  "name": "@theclaw/zalo",
+  "version": "2026.4.25",
+  "description": "TheClaw Zalo channel plugin",
+  "type": "module",
+  "dependencies": {
+    "undici": "8.1.0"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "setupEntry": "./setup-entry.ts",
+    "channel": {
+      "id": "zalo",
+      "label": "Zalo",
+      "selectionLabel": "Zalo (Bot API)",
+      "docsPath": "/channels/zalo",
+      "docsLabel": "zalo",
+      "blurb": "Vietnam-focused messaging platform with Bot API.",
+      "aliases": [
+        "zl"
+      ],
+      "order": 80,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@theclaw/zalo",
+      "defaultChoice": "npm",
+      "minHostVersion": ">=2026.4.10"
+    },
+    "compat": {
+      "pluginApi": ">=2026.4.25"
+    },
+    "build": {
+      "theclawVersion": "2026.4.25"
+    },
+    "release": {
+      "publishToClawHub": true,
+      "publishToNpm": true
+    }
+  }
+}

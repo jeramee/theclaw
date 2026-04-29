@@ -1,0 +1,17 @@
+// Copy to LocalSigning.xcconfig for personal local signing overrides.
+// This file is only an example and should stay committed.
+
+THECLAW_CODE_SIGN_STYLE = Automatic
+THECLAW_DEVELOPMENT_TEAM = YOUR_TEAM_ID
+
+THECLAW_APP_BUNDLE_ID = ai.theclaw.client
+THECLAW_SHARE_BUNDLE_ID = ai.theclaw.client.share
+THECLAW_ACTIVITY_WIDGET_BUNDLE_ID = ai.theclaw.client.activitywidget
+THECLAW_WATCH_APP_BUNDLE_ID = ai.theclaw.client.watchkitapp
+THECLAW_WATCH_EXTENSION_BUNDLE_ID = ai.theclaw.client.watchkitapp.extension
+
+// Leave empty with automatic signing.
+THECLAW_APP_PROFILE =
+THECLAW_SHARE_PROFILE =
+THECLAW_WATCH_APP_PROFILE =
+THECLAW_WATCH_EXTENSION_PROFILE =

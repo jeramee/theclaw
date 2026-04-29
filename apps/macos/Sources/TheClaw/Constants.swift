@@ -1,0 +1,51 @@
+import Foundation
+
+// Stable identifier used for both the macOS LaunchAgent label and Nix-managed defaults suite.
+// nix-theclaw writes app defaults into this suite to survive app bundle identifier churn.
+let launchdLabel = "ai.theclaw.mac"
+let gatewayLaunchdLabel = "ai.theclaw.gateway"
+let onboardingVersionKey = "theclaw.onboardingVersion"
+let onboardingSeenKey = "theclaw.onboardingSeen"
+let currentOnboardingVersion = 7
+let pauseDefaultsKey = "theclaw.pauseEnabled"
+let iconAnimationsEnabledKey = "theclaw.iconAnimationsEnabled"
+let swabbleEnabledKey = "theclaw.swabbleEnabled"
+let swabbleTriggersKey = "theclaw.swabbleTriggers"
+let voiceWakeTriggerChimeKey = "theclaw.voiceWakeTriggerChime"
+let voiceWakeSendChimeKey = "theclaw.voiceWakeSendChime"
+let showDockIconKey = "theclaw.showDockIcon"
+let defaultVoiceWakeTriggers = ["theclaw"]
+let voiceWakeMaxWords = 32
+let voiceWakeMaxWordLength = 64
+let voiceWakeMicKey = "theclaw.voiceWakeMicID"
+let voiceWakeMicNameKey = "theclaw.voiceWakeMicName"
+let voiceWakeLocaleKey = "theclaw.voiceWakeLocaleID"
+let voiceWakeAdditionalLocalesKey = "theclaw.voiceWakeAdditionalLocaleIDs"
+let voicePushToTalkEnabledKey = "theclaw.voicePushToTalkEnabled"
+let voiceWakeTriggersTalkModeKey = "theclaw.voiceWakeTriggersTalkMode"
+let talkEnabledKey = "theclaw.talkEnabled"
+let talkPhaseSoundsEnabledKey = "theclaw.talkPhaseSoundsEnabled"
+let talkShiftToStopEnabledKey = "theclaw.talkShiftToStopEnabled"
+let iconOverrideKey = "theclaw.iconOverride"
+let connectionModeKey = "theclaw.connectionMode"
+let remoteTargetKey = "theclaw.remoteTarget"
+let remoteIdentityKey = "theclaw.remoteIdentity"
+let remoteProjectRootKey = "theclaw.remoteProjectRoot"
+let remoteCliPathKey = "theclaw.remoteCliPath"
+let canvasEnabledKey = "theclaw.canvasEnabled"
+let cameraEnabledKey = "theclaw.cameraEnabled"
+let systemRunPolicyKey = "theclaw.systemRunPolicy"
+let systemRunAllowlistKey = "theclaw.systemRunAllowlist"
+let systemRunEnabledKey = "theclaw.systemRunEnabled"
+let locationModeKey = "theclaw.locationMode"
+let locationPreciseKey = "theclaw.locationPreciseEnabled"
+let peekabooBridgeEnabledKey = "theclaw.peekabooBridgeEnabled"
+let deepLinkKeyKey = "theclaw.deepLinkKey"
+let modelCatalogPathKey = "theclaw.modelCatalogPath"
+let modelCatalogReloadKey = "theclaw.modelCatalogReload"
+let cliInstallPromptedVersionKey = "theclaw.cliInstallPromptedVersion"
+let heartbeatsEnabledKey = "theclaw.heartbeatsEnabled"
+let debugPaneEnabledKey = "theclaw.debugPaneEnabled"
+let debugFileLogEnabledKey = "theclaw.debug.fileLogEnabled"
+let appLogLevelKey = "theclaw.debug.appLogLevel"
+let voiceWakeSupported: Bool = ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 26

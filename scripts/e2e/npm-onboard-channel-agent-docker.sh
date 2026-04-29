@@ -1,0 +1,300 @@
+#!/usr/bin/env bash
+# Installs a prepared TheClaw npm tarball in Docker, runs non-interactive
+# onboarding for a channel, and verifies one mocked model turn through Gateway.
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$ROOT_DIR/scripts/lib/docker-e2e-image.sh"
+source "$ROOT_DIR/scripts/lib/docker-e2e-package.sh"
+
+IMAGE_NAME="$(docker_e2e_resolve_image "theclaw-npm-onboard-channel-agent-e2e" THECLAW_NPM_ONBOARD_E2E_IMAGE)"
+DOCKER_TARGET="${THECLAW_NPM_ONBOARD_DOCKER_TARGET:-bare}"
+HOST_BUILD="${THECLAW_NPM_ONBOARD_HOST_BUILD:-1}"
+PACKAGE_TGZ="${THECLAW_CURRENT_PACKAGE_TGZ:-}"
+CHANNEL="${THECLAW_NPM_ONBOARD_CHANNEL:-telegram}"
+
+case "$CHANNEL" in
+  telegram | discord) ;;
+  *)
+    echo "THECLAW_NPM_ONBOARD_CHANNEL must be telegram or discord, got: $CHANNEL" >&2
+    exit 1
+    ;;
+esac
+
+docker_e2e_build_or_reuse "$IMAGE_NAME" npm-onboard-channel-agent "$ROOT_DIR/scripts/e2e/Dockerfile" "$ROOT_DIR" "$DOCKER_TARGET"
+
+prepare_package_tgz() {
+  if [ -n "$PACKAGE_TGZ" ]; then
+    PACKAGE_TGZ="$(docker_e2e_prepare_package_tgz npm-onboard-channel-agent "$PACKAGE_TGZ")"
+    return 0
+  fi
+  if [ "$HOST_BUILD" = "0" ] && [ -z "${THECLAW_CURRENT_PACKAGE_TGZ:-}" ]; then
+    echo "THECLAW_NPM_ONBOARD_HOST_BUILD=0 requires THECLAW_CURRENT_PACKAGE_TGZ" >&2
+    exit 1
+  fi
+  PACKAGE_TGZ="$(docker_e2e_prepare_package_tgz npm-onboard-channel-agent)"
+}
+
+prepare_package_tgz
+
+docker_e2e_package_mount_args "$PACKAGE_TGZ"
+docker_e2e_harness_mount_args
+run_log="$(docker_e2e_run_log npm-onboard-channel-agent)"
+THECLAW_TEST_STATE_SCRIPT_B64="$(docker_e2e_test_state_shell_b64 npm-onboard-channel-agent empty)"
+
+echo "Running npm tarball onboard/channel/agent Docker E2E ($CHANNEL)..."
+if ! docker run --rm \
+  -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
+  -e THECLAW_NPM_ONBOARD_CHANNEL="$CHANNEL" \
+  -e "THECLAW_TEST_STATE_SCRIPT_B64=$THECLAW_TEST_STATE_SCRIPT_B64" \
+  "${DOCKER_E2E_PACKAGE_ARGS[@]}" \
+  "${DOCKER_E2E_HARNESS_ARGS[@]}" \
+  -i "$IMAGE_NAME" bash -s >"$run_log" 2>&1 <<'EOF'
+set -euo pipefail
+
+eval "$(printf "%s" "${THECLAW_TEST_STATE_SCRIPT_B64:?missing THECLAW_TEST_STATE_SCRIPT_B64}" | base64 -d)"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+export PATH="$NPM_CONFIG_PREFIX/bin:$PATH"
+export OPENAI_API_KEY="sk-theclaw-npm-onboard-e2e"
+export THECLAW_GATEWAY_TOKEN="npm-onboard-channel-agent-token"
+
+CHANNEL="${THECLAW_NPM_ONBOARD_CHANNEL:?missing THECLAW_NPM_ONBOARD_CHANNEL}"
+PORT="18789"
+MOCK_PORT="44080"
+SUCCESS_MARKER="THECLAW_AGENT_E2E_OK_ASSISTANT"
+MOCK_REQUEST_LOG="/tmp/theclaw-mock-openai-requests.jsonl"
+mock_pid=""
+
+case "$CHANNEL" in
+  telegram)
+    CHANNEL_TOKEN="123456:theclaw-npm-onboard-token"
+    DEP_SENTINEL="grammy"
+    ;;
+  discord)
+    CHANNEL_TOKEN="theclaw-npm-onboard-discord-token"
+    DEP_SENTINEL="discord-api-types"
+    ;;
+  *)
+    echo "unsupported channel: $CHANNEL" >&2
+    exit 1
+    ;;
+esac
+
+cleanup() {
+  if [ -n "${mock_pid:-}" ] && kill -0 "$mock_pid" 2>/dev/null; then
+    kill "$mock_pid" 2>/dev/null || true
+    wait "$mock_pid" 2>/dev/null || true
+  fi
+}
+trap cleanup EXIT
+
+dump_debug_logs() {
+  local status="$1"
+  echo "npm onboard/channel/agent scenario failed with exit code $status" >&2
+  for file in \
+    /tmp/theclaw-install.log \
+    /tmp/theclaw-onboard.json \
+    /tmp/theclaw-channel-add.log \
+    /tmp/theclaw-doctor.log \
+    /tmp/theclaw-agent.combined \
+    /tmp/theclaw-agent.err \
+    /tmp/theclaw-agent.json \
+    /tmp/theclaw-mock-openai.log \
+    "$MOCK_REQUEST_LOG"; do
+    if [ -f "$file" ]; then
+      echo "--- $file ---" >&2
+      sed -n '1,220p' "$file" >&2 || true
+    fi
+  done
+}
+trap 'status=$?; dump_debug_logs "$status"; exit "$status"' ERR
+
+echo "Installing mounted TheClaw package..."
+package_tgz="${THECLAW_CURRENT_PACKAGE_TGZ:?missing THECLAW_CURRENT_PACKAGE_TGZ}"
+npm install -g "$package_tgz" --no-fund --no-audit >/tmp/theclaw-install.log 2>&1
+
+command -v theclaw >/dev/null
+package_root="$(npm root -g)/theclaw"
+test -d "$package_root/dist/extensions/telegram"
+test -d "$package_root/dist/extensions/discord"
+
+assert_dep_absent() {
+  local sentinel="$1"
+  if find "$package_root" "$HOME/.theclaw" -path "*/node_modules/$sentinel/package.json" -print -quit 2>/dev/null | grep -q .; then
+    echo "$sentinel should not be installed before channel activation repair" >&2
+    find "$package_root" "$HOME/.theclaw" -path "*/node_modules/$sentinel/package.json" -print 2>/dev/null >&2 || true
+    exit 1
+  fi
+}
+
+assert_dep_present() {
+  local sentinel="$1"
+  if ! find "$package_root" "$HOME/.theclaw" -path "*/node_modules/$sentinel/package.json" -print -quit 2>/dev/null | grep -q .; then
+    echo "$sentinel was not installed on demand" >&2
+    find "$package_root" "$HOME/.theclaw" -maxdepth 6 -type d -name node_modules -print 2>/dev/null >&2 || true
+    exit 1
+  fi
+}
+
+MOCK_PORT="$MOCK_PORT" SUCCESS_MARKER="$SUCCESS_MARKER" MOCK_REQUEST_LOG="$MOCK_REQUEST_LOG" node scripts/e2e/mock-openai-server.mjs >/tmp/theclaw-mock-openai.log 2>&1 &
+mock_pid="$!"
+for _ in $(seq 1 80); do
+  if node -e "fetch('http://127.0.0.1:${MOCK_PORT}/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"; then
+    break
+  fi
+  sleep 0.1
+done
+node -e "fetch('http://127.0.0.1:${MOCK_PORT}/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+echo "Running non-interactive onboarding..."
+theclaw onboard --non-interactive --accept-risk \
+  --mode local \
+  --auth-choice openai-api-key \
+  --secret-input-mode ref \
+  --gateway-port "$PORT" \
+  --gateway-bind loopback \
+  --skip-daemon \
+  --skip-ui \
+  --skip-skills \
+  --skip-health \
+  --json >/tmp/theclaw-onboard.json
+
+node - "$HOME" <<'NODE'
+const fs = require("node:fs");
+const path = require("node:path");
+
+const home = process.argv[2];
+const stateDir = path.join(home, ".theclaw");
+const configPath = path.join(stateDir, "theclaw.json");
+const agentDir = path.join(stateDir, "agents", "main", "agent");
+const authPath = path.join(agentDir, "auth-profiles.json");
+
+if (!fs.existsSync(configPath)) {
+  throw new Error("onboard did not write theclaw.json");
+}
+if (!fs.existsSync(agentDir)) {
+  throw new Error("onboard did not create main agent dir");
+}
+if (!fs.existsSync(authPath)) {
+  throw new Error("onboard did not create auth-profiles.json");
+}
+const authRaw = fs.readFileSync(authPath, "utf8");
+if (!authRaw.includes("OPENAI_API_KEY")) {
+  throw new Error("auth profile did not persist OPENAI_API_KEY env ref");
+}
+if (authRaw.includes("sk-theclaw-npm-onboard-e2e")) {
+  throw new Error("auth profile persisted the raw OpenAI test key");
+}
+NODE
+
+node - "$MOCK_PORT" <<'NODE'
+const fs = require("node:fs");
+const path = require("node:path");
+
+const mockPort = Number(process.argv[2]);
+const configPath = path.join(process.env.HOME, ".theclaw", "theclaw.json");
+const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
+const modelRef = "openai/gpt-5.5";
+const cost = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
+
+cfg.models = {
+  ...(cfg.models || {}),
+  mode: "merge",
+  providers: {
+    ...(cfg.models?.providers || {}),
+    openai: {
+      ...(cfg.models?.providers?.openai || {}),
+      baseUrl: `http://127.0.0.1:${mockPort}/v1`,
+      apiKey: { source: "env", provider: "default", id: "OPENAI_API_KEY" },
+      api: "openai-responses",
+      request: { ...(cfg.models?.providers?.openai?.request || {}), allowPrivateNetwork: true },
+      models: [
+        {
+          id: "gpt-5.5",
+          name: "gpt-5.5",
+          api: "openai-responses",
+          reasoning: false,
+          input: ["text", "image"],
+          cost,
+          contextWindow: 128000,
+          contextTokens: 96000,
+          maxTokens: 4096,
+        },
+      ],
+    },
+  },
+};
+cfg.agents = {
+  ...(cfg.agents || {}),
+  defaults: {
+    ...(cfg.agents?.defaults || {}),
+    model: { primary: modelRef },
+    models: {
+      ...(cfg.agents?.defaults?.models || {}),
+      [modelRef]: { params: { transport: "sse", openaiWsWarmup: false } },
+    },
+  },
+};
+cfg.plugins = {
+  ...(cfg.plugins || {}),
+  enabled: true,
+};
+fs.writeFileSync(configPath, `${JSON.stringify(cfg, null, 2)}\n`);
+NODE
+
+assert_dep_absent "$DEP_SENTINEL"
+
+echo "Configuring $CHANNEL..."
+theclaw channels add --channel "$CHANNEL" --token "$CHANNEL_TOKEN" >/tmp/theclaw-channel-add.log 2>&1
+node - "$CHANNEL" "$CHANNEL_TOKEN" <<'NODE'
+const fs = require("node:fs");
+const path = require("node:path");
+const channel = process.argv[2];
+const token = process.argv[3];
+const cfg = JSON.parse(fs.readFileSync(path.join(process.env.HOME, ".theclaw", "theclaw.json"), "utf8"));
+const entry = cfg.channels?.[channel];
+if (!entry || entry.enabled === false) {
+  throw new Error(`${channel} was not enabled`);
+}
+const serialized = JSON.stringify(entry);
+if (!serialized.includes(token)) {
+  throw new Error(`${channel} token was not persisted`);
+}
+NODE
+
+echo "Running doctor after channel activation..."
+theclaw doctor --repair --non-interactive >/tmp/theclaw-doctor.log 2>&1
+assert_dep_present "$DEP_SENTINEL"
+
+echo "Running local agent turn against mocked OpenAI..."
+theclaw agent --local \
+  --agent main \
+  --session-id npm-onboard-channel-agent \
+  --message "Return the success marker from the test server." \
+  --thinking off \
+  --json >/tmp/theclaw-agent.combined 2>&1
+
+node - "$SUCCESS_MARKER" "$MOCK_REQUEST_LOG" <<'NODE'
+const fs = require("node:fs");
+const marker = process.argv[2];
+const logPath = process.argv[3];
+const output = fs.readFileSync("/tmp/theclaw-agent.combined", "utf8");
+if (!output.includes(marker)) {
+  throw new Error(`agent JSON did not contain success marker. Output: ${output}`);
+}
+const requestLog = fs.existsSync(logPath) ? fs.readFileSync(logPath, "utf8") : "";
+if (!/\/v1\/(responses|chat\/completions)/.test(requestLog)) {
+  throw new Error(`mock OpenAI server was not used. Requests: ${requestLog}`);
+}
+NODE
+
+echo "npm tarball onboard/channel/agent Docker E2E passed for $CHANNEL"
+EOF
+then
+  docker_e2e_print_log "$run_log"
+  rm -f "$run_log"
+  exit 1
+fi
+
+rm -f "$run_log"
+echo "npm tarball onboard/channel/agent Docker E2E passed ($CHANNEL)"

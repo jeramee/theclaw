@@ -1,0 +1,27 @@
+{
+  "name": "@theclaw/migrate-hermes",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "Hermes to TheClaw migration provider",
+  "type": "module",
+  "dependencies": {
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

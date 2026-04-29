@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/lmstudio-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw LM Studio provider plugin",
+  "type": "module",
+  "dependencies": {
+    "@mariozechner/pi-ai": "0.70.5"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

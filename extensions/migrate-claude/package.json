@@ -1,0 +1,24 @@
+{
+  "name": "@theclaw/migrate-claude",
+  "version": "2026.4.26",
+  "private": true,
+  "description": "Claude to TheClaw migration provider",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.26"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@theclaw/openai-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw OpenAI provider plugins",
+  "type": "module",
+  "dependencies": {
+    "@mariozechner/pi-ai": "0.70.5",
+    "ws": "^8.20.0"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/deepinfra-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw DeepInfra provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

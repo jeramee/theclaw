@@ -1,0 +1,23 @@
+{
+  "name": "@theclaw/amazon-bedrock-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Amazon Bedrock provider plugin",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-bedrock": "3.1037.0",
+    "@aws-sdk/client-bedrock-runtime": "3.1037.0",
+    "@aws-sdk/credential-provider-node": "3.972.36"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "bundle": {
+      "stageRuntimeDependencies": true
+    },
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/kilocode-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Kilo Gateway provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

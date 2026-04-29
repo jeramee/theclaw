@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/synthetic-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Synthetic provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

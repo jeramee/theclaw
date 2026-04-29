@@ -1,0 +1,22 @@
+// Default signing values for shared/repo builds.
+// Auto-selected local team overrides live in .local-signing.xcconfig (git-ignored).
+// Manual local overrides can go in LocalSigning.xcconfig (git-ignored).
+
+#include "Config/Version.xcconfig"
+
+THECLAW_CODE_SIGN_STYLE = Manual
+THECLAW_DEVELOPMENT_TEAM = Y5PE65HELJ
+
+THECLAW_APP_BUNDLE_ID = ai.theclaw.client
+THECLAW_SHARE_BUNDLE_ID = ai.theclaw.client.share
+THECLAW_WATCH_APP_BUNDLE_ID = ai.theclaw.client.watchkitapp
+THECLAW_WATCH_EXTENSION_BUNDLE_ID = ai.theclaw.client.watchkitapp.extension
+THECLAW_ACTIVITY_WIDGET_BUNDLE_ID = ai.theclaw.client.activitywidget
+
+THECLAW_APP_PROFILE = ai.theclaw.client Development
+THECLAW_SHARE_PROFILE = ai.theclaw.client.share Development
+
+// Keep local includes after defaults: xcconfig is evaluated top-to-bottom,
+// so later assignments in local files override the defaults above.
+#include? ".local-signing.xcconfig"
+#include? "LocalSigning.xcconfig"

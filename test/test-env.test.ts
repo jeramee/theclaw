@@ -1,0 +1,245 @@
+import fs from "node:fs";
+import path from "node:path";
+import { importFreshModule } from "theclaw/plugin-sdk/test-fixtures";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanupTempDirs, makeTempDir } from "./helpers/temp-dir.js";
+import { installTestEnv } from "./test-env.js";
+
+const ORIGINAL_ENV = { ...process.env };
+
+const tempDirs = new Set<string>();
+const cleanupFns: Array<() => void> = [];
+
+function restoreProcessEnv(): void {
+  for (const key of Object.keys(process.env)) {
+    if (!(key in ORIGINAL_ENV)) {
+      delete process.env[key];
+    }
+  }
+  for (const [key, value] of Object.entries(ORIGINAL_ENV)) {
+    if (value === undefined) {
+      delete process.env[key];
+    } else {
+      process.env[key] = value;
+    }
+  }
+}
+
+function writeFile(targetPath: string, content: string): void {
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  fs.writeFileSync(targetPath, content, "utf8");
+}
+
+function createTempHome(): string {
+  return makeTempDir(tempDirs, "theclaw-test-env-real-home-");
+}
+
+afterEach(() => {
+  while (cleanupFns.length > 0) {
+    cleanupFns.pop()?.();
+  }
+  restoreProcessEnv();
+  cleanupTempDirs(tempDirs);
+});
+
+describe("installTestEnv", () => {
+  it("keeps live tests on a temp HOME while copying config and auth state", () => {
+    const realHome = createTempHome();
+    const priorIsolatedHome = createTempHome();
+    writeFile(path.join(realHome, ".profile"), "export TEST_PROFILE_ONLY=from-profile\n");
+    writeFile(
+      path.join(realHome, "custom-theclaw.json5"),
+      `{
+        // Preserve provider config, strip host-bound paths.
+        agents: {
+          defaults: {
+            workspace: "/Users/peter/Projects",
+            agentDir: "/Users/peter/.theclaw/agents/main/agent",
+          },
+          list: [
+            {
+              id: "dev",
+              workspace: "/Users/peter/dev-workspace",
+              agentDir: "/Users/peter/.theclaw/agents/dev/agent",
+            },
+          ],
+        },
+        models: {
+          providers: {
+            custom: { baseUrl: "https://example.test/v1" },
+          },
+        },
+        channels: {
+          telegram: {
+            streaming: {
+              mode: "block",
+              chunkMode: "newline",
+              block: {
+                enabled: true,
+              },
+              preview: {
+                chunk: {
+                  minChars: 120,
+                },
+              },
+            },
+          },
+        },
+      }`,
+    );
+    writeFile(path.join(realHome, ".theclaw", "credentials", "token.txt"), "secret\n");
+    writeFile(
+      path.join(realHome, ".theclaw", "external-plugins", "glueclaw", "theclaw.plugin.json"),
+      '{"id":"glueclaw"}\n',
+    );
+    writeFile(
+      path.join(realHome, ".theclaw", "agents", "main", "agent", "auth-profiles.json"),
+      JSON.stringify({ version: 1, profiles: { default: { provider: "openai" } } }, null, 2),
+    );
+    writeFile(path.join(realHome, ".claude", ".credentials.json"), '{"accessToken":"token"}\n');
+    writeFile(path.join(realHome, ".claude", "projects", "old-session.jsonl"), "session\n");
+    fs.mkdirSync(path.join(realHome, ".claude", "settings.local.json"), { recursive: true });
+    writeFile(path.join(realHome, ".codex", "auth.json"), '{"OPENAI_API_KEY":"token"}\n');
+    writeFile(path.join(realHome, ".codex", "config.toml"), 'model = "gpt-5.4"\n');
+    writeFile(
+      path.join(realHome, ".codex", "sessions", "2026", "02", "26", "rollout.jsonl"),
+      "session\n",
+    );
+
+    process.env.HOME = realHome;
+    process.env.USERPROFILE = realHome;
+    process.env.THECLAW_LIVE_TEST = "1";
+    process.env.THECLAW_LIVE_TEST_QUIET = "1";
+    process.env.THECLAW_CONFIG_PATH = "~/custom-theclaw.json5";
+    process.env.THECLAW_TEST_HOME = priorIsolatedHome;
+    process.env.THECLAW_STATE_DIR = path.join(priorIsolatedHome, ".theclaw");
+
+    const testEnv = installTestEnv();
+    cleanupFns.push(testEnv.cleanup);
+
+    expect(testEnv.tempHome).not.toBe(realHome);
+    expect(process.env.HOME).toBe(testEnv.tempHome);
+    expect(process.env.THECLAW_TEST_HOME).toBe(testEnv.tempHome);
+    expect(process.env.TEST_PROFILE_ONLY).toBe("from-profile");
+
+    const copiedConfigPath = path.join(testEnv.tempHome, ".theclaw", "theclaw.json");
+    const copiedConfig = JSON.parse(fs.readFileSync(copiedConfigPath, "utf8")) as {
+      agents?: {
+        defaults?: Record<string, unknown>;
+        list?: Array<Record<string, unknown>>;
+      };
+      models?: { providers?: Record<string, unknown> };
+      channels?: {
+        telegram?: {
+          streaming?: {
+            mode?: string;
+            chunkMode?: string;
+            block?: { enabled?: boolean };
+            preview?: { chunk?: { minChars?: number } };
+          };
+        };
+      };
+    };
+    expect(copiedConfig.models?.providers?.custom).toEqual({ baseUrl: "https://example.test/v1" });
+    expect(copiedConfig.agents?.defaults?.workspace).toBeUndefined();
+    expect(copiedConfig.agents?.defaults?.agentDir).toBeUndefined();
+    expect(copiedConfig.agents?.list?.[0]?.workspace).toBeUndefined();
+    expect(copiedConfig.agents?.list?.[0]?.agentDir).toBeUndefined();
+    expect(copiedConfig.channels?.telegram?.streaming).toEqual({
+      mode: "block",
+      chunkMode: "newline",
+      block: { enabled: true },
+      preview: { chunk: { minChars: 120 } },
+    });
+
+    expect(
+      fs.existsSync(path.join(testEnv.tempHome, ".theclaw", "credentials", "token.txt")),
+    ).toBe(true);
+    expect(
+      fs.existsSync(
+        path.join(
+          testEnv.tempHome,
+          ".theclaw",
+          "external-plugins",
+          "glueclaw",
+          "theclaw.plugin.json",
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      fs.existsSync(
+        path.join(testEnv.tempHome, ".theclaw", "agents", "main", "agent", "auth-profiles.json"),
+      ),
+    ).toBe(true);
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".claude", ".credentials.json"))).toBe(true);
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".claude", "projects"))).toBe(false);
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".claude", "settings.local.json"))).toBe(
+      false,
+    );
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".codex", "auth.json"))).toBe(true);
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".codex", "config.toml"))).toBe(true);
+    expect(fs.existsSync(path.join(testEnv.tempHome, ".codex", "sessions"))).toBe(false);
+  });
+
+  it("allows explicit live runs against the real HOME", () => {
+    const realHome = createTempHome();
+    writeFile(path.join(realHome, ".profile"), "export TEST_PROFILE_ONLY=from-profile\n");
+
+    process.env.HOME = realHome;
+    process.env.USERPROFILE = realHome;
+    process.env.THECLAW_LIVE_TEST = "1";
+    process.env.THECLAW_LIVE_USE_REAL_HOME = "1";
+    process.env.THECLAW_LIVE_TEST_QUIET = "1";
+
+    const testEnv = installTestEnv();
+
+    expect(testEnv.tempHome).toBe(realHome);
+    expect(process.env.HOME).toBe(realHome);
+    expect(process.env.TEST_PROFILE_ONLY).toBe("from-profile");
+  });
+
+  it("does not load ~/.profile for normal isolated test runs", () => {
+    const realHome = createTempHome();
+    writeFile(path.join(realHome, ".profile"), "export TEST_PROFILE_ONLY=from-profile\n");
+
+    process.env.HOME = realHome;
+    process.env.USERPROFILE = realHome;
+    delete process.env.LIVE;
+    delete process.env.THECLAW_LIVE_TEST;
+    delete process.env.THECLAW_LIVE_GATEWAY;
+    delete process.env.THECLAW_LIVE_USE_REAL_HOME;
+    delete process.env.THECLAW_LIVE_TEST_QUIET;
+
+    const testEnv = installTestEnv();
+    cleanupFns.push(testEnv.cleanup);
+
+    expect(testEnv.tempHome).not.toBe(realHome);
+    expect(process.env.TEST_PROFILE_ONLY).toBeUndefined();
+  });
+
+  it("falls back to parsing ~/.profile when bash is unavailable", async () => {
+    const realHome = createTempHome();
+    writeFile(path.join(realHome, ".profile"), "export TEST_PROFILE_ONLY=from-profile\n");
+
+    process.env.HOME = realHome;
+    process.env.USERPROFILE = realHome;
+    process.env.THECLAW_LIVE_TEST = "1";
+    process.env.THECLAW_LIVE_USE_REAL_HOME = "1";
+    process.env.THECLAW_LIVE_TEST_QUIET = "1";
+
+    vi.doMock("node:child_process", () => ({
+      execFileSync: () => {
+        throw Object.assign(new Error("bash missing"), { code: "ENOENT" });
+      },
+    }));
+
+    const { installTestEnv: installFreshTestEnv } = await importFreshModule<
+      typeof import("./test-env.js")
+    >(import.meta.url, "./test-env.js?scope=profile-fallback");
+
+    const testEnv = installFreshTestEnv();
+
+    expect(testEnv.tempHome).toBe(realHome);
+    expect(process.env.TEST_PROFILE_ONLY).toBe("from-profile");
+  });
+});

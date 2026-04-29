@@ -1,0 +1,10 @@
+{
+  "name": "@theclaw/video-generation-core",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw video generation runtime package",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  }
+}

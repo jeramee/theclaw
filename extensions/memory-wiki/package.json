@@ -1,0 +1,28 @@
+{
+  "name": "@theclaw/memory-wiki",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw persistent wiki plugin",
+  "type": "module",
+  "dependencies": {
+    "typebox": "1.1.33",
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

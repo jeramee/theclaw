@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/vercel-ai-gateway-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Vercel AI Gateway provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

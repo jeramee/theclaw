@@ -1,0 +1,18 @@
+{
+  "name": "@theclaw/media-understanding-core",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw media understanding runtime package",
+  "type": "module",
+  "dependencies": {
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "bundle": {
+      "stageRuntimeDependencies": true
+    }
+  }
+}

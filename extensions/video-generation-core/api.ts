@@ -1,0 +1,32 @@
+export type { AuthProfileStore } from "theclaw/plugin-sdk/video-generation-core";
+export {
+  buildNoCapabilityModelConfiguredMessage,
+  createSubsystemLogger,
+  describeFailoverError,
+  getProviderEnvVars,
+  getVideoGenerationProvider,
+  isFailoverError,
+  listVideoGenerationProviders,
+  parseVideoGenerationModelRef,
+  resolveAgentModelFallbackValues,
+  resolveAgentModelPrimaryValue,
+  resolveCapabilityModelCandidates,
+  throwCapabilityGenerationFailure,
+} from "theclaw/plugin-sdk/video-generation-core";
+export type {
+  FallbackAttempt,
+  GeneratedVideoAsset,
+  TheClawConfig,
+  VideoGenerationIgnoredOverride,
+  VideoGenerationMode,
+  VideoGenerationModeCapabilities,
+  VideoGenerationProvider,
+  VideoGenerationProviderCapabilities,
+  VideoGenerationProviderConfiguredContext,
+  VideoGenerationProviderPlugin,
+  VideoGenerationRequest,
+  VideoGenerationResolution,
+  VideoGenerationResult,
+  VideoGenerationSourceAsset,
+  VideoGenerationTransformCapabilities,
+} from "theclaw/plugin-sdk/video-generation-core";

@@ -1,0 +1,31 @@
+{
+  "name": "@theclaw/qa-matrix",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Matrix QA runner plugin",
+  "type": "module",
+  "dependencies": {
+    "undici": "8.1.0"
+  },
+  "devDependencies": {
+    "@theclaw/matrix": "workspace:*",
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.4.25"
+    }
+  }
+}

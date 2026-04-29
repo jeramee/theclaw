@@ -1,0 +1,103 @@
+services:
+  theclaw-gateway:
+    image: ${THECLAW_IMAGE:-theclaw:local}
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      THECLAW_GATEWAY_TOKEN: ${THECLAW_GATEWAY_TOKEN:-}
+      THECLAW_ALLOW_INSECURE_PRIVATE_WS: ${THECLAW_ALLOW_INSECURE_PRIVATE_WS:-}
+      # Empty means auto: Bonjour disables itself in detected containers.
+      # Set 0 only on host/macvlan/mDNS-capable networks; set 1 to force off.
+      THECLAW_DISABLE_BONJOUR: ${THECLAW_DISABLE_BONJOUR:-}
+      # OpenTelemetry export is outbound OTLP/HTTP from the Gateway. Prometheus
+      # uses the existing authenticated Gateway route; it does not need a port.
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: ${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_METRICS_ENDPOINT: ${OTEL_EXPORTER_OTLP_METRICS_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: ${OTEL_EXPORTER_OTLP_LOGS_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_PROTOCOL: ${OTEL_EXPORTER_OTLP_PROTOCOL:-http/protobuf}
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-}
+      OTEL_SEMCONV_STABILITY_OPT_IN: ${OTEL_SEMCONV_STABILITY_OPT_IN:-}
+      THECLAW_OTEL_PRELOADED: ${THECLAW_OTEL_PRELOADED:-}
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY:-}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY:-}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE:-}
+      THECLAW_PLUGIN_STAGE_DIR: /var/lib/theclaw/plugin-runtime-deps
+      TZ: ${THECLAW_TZ:-UTC}
+    volumes:
+      - ${THECLAW_CONFIG_DIR}:/home/node/.theclaw
+      - ${THECLAW_WORKSPACE_DIR}:/home/node/.theclaw/workspace
+      - theclaw-plugin-runtime-deps:/var/lib/theclaw/plugin-runtime-deps
+      ## Uncomment the lines below to enable sandbox isolation
+      ## (agents.defaults.sandbox). Requires Docker CLI in the image
+      ## (build with --build-arg THECLAW_INSTALL_DOCKER_CLI=1) or use
+      ## scripts/docker/setup.sh with THECLAW_SANDBOX=1 for automated setup.
+      ## Set DOCKER_GID to the host's docker group GID (run: stat -c '%g' /var/run/docker.sock).
+      # - /var/run/docker.sock:/var/run/docker.sock
+    # group_add:
+    #   - "${DOCKER_GID:-999}"
+    # Let bundled local-model providers reach host-side LM Studio/Ollama via
+    # http://host.docker.internal:<port>. Docker Desktop usually provides this
+    # alias; the host-gateway mapping makes it work on Linux Docker Engine too.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${THECLAW_GATEWAY_PORT:-18789}:18789"
+      - "${THECLAW_BRIDGE_PORT:-18790}:18790"
+    init: true
+    restart: unless-stopped
+    command:
+      [
+        "node",
+        "dist/index.js",
+        "gateway",
+        "--bind",
+        "${THECLAW_GATEWAY_BIND:-lan}",
+        "--port",
+        "18789",
+      ]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:18789/healthz').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  theclaw-cli:
+    image: ${THECLAW_IMAGE:-theclaw:local}
+    network_mode: "service:theclaw-gateway"
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      THECLAW_GATEWAY_TOKEN: ${THECLAW_GATEWAY_TOKEN:-}
+      THECLAW_ALLOW_INSECURE_PRIVATE_WS: ${THECLAW_ALLOW_INSECURE_PRIVATE_WS:-}
+      BROWSER: echo
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY:-}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY:-}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE:-}
+      THECLAW_PLUGIN_STAGE_DIR: /var/lib/theclaw/plugin-runtime-deps
+      TZ: ${THECLAW_TZ:-UTC}
+    volumes:
+      - ${THECLAW_CONFIG_DIR}:/home/node/.theclaw
+      - ${THECLAW_WORKSPACE_DIR}:/home/node/.theclaw/workspace
+      - theclaw-plugin-runtime-deps:/var/lib/theclaw/plugin-runtime-deps
+    stdin_open: true
+    tty: true
+    init: true
+    entrypoint: ["node", "dist/index.js"]
+    depends_on:
+      - theclaw-gateway
+
+volumes:
+  theclaw-plugin-runtime-deps:

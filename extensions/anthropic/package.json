@@ -1,0 +1,21 @@
+{
+  "name": "@theclaw/anthropic-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Anthropic provider plugin",
+  "type": "module",
+  "dependencies": {
+    "@mariozechner/pi-ai": "0.70.5"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "bundle": {
+      "stageRuntimeDependencies": true
+    },
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

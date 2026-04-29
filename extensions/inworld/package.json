@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/inworld-speech",
+  "version": "2026.4.16",
+  "private": true,
+  "description": "TheClaw Inworld speech plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

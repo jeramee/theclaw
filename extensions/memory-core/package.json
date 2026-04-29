@@ -1,0 +1,28 @@
+{
+  "name": "@theclaw/memory-core",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw core memory search plugin",
+  "type": "module",
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "typebox": "1.1.33"
+  },
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*",
+    "theclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "theclaw": ">=2026.4.25"
+  },
+  "peerDependenciesMeta": {
+    "theclaw": {
+      "optional": true
+    }
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/cloudflare-ai-gateway-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Cloudflare AI Gateway provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

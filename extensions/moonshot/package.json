@@ -1,0 +1,15 @@
+{
+  "name": "@theclaw/moonshot-provider",
+  "version": "2026.4.25",
+  "private": true,
+  "description": "TheClaw Moonshot provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "@theclaw/plugin-sdk": "workspace:*"
+  },
+  "theclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

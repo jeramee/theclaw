@@ -1,0 +1,4 @@
+interface:
+  display_name: "TheClaw Testing"
+  short_description: "Choose cheap, targeted TheClaw validation"
+  default_prompt: "Use $theclaw-testing to choose the cheapest safe test or CI verification path, inspect failures, and rerun only the relevant TheClaw lane."

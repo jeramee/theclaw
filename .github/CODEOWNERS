@@ -1,0 +1,56 @@
+# Protect the ownership rules themselves.
+/.github/CODEOWNERS @steipete
+
+# WARNING: GitHub CODEOWNERS uses last-match-wins semantics.
+# If you add overlapping rules below the secops block, include @theclaw/secops
+# on those entries too or you can silently remove required secops review.
+# Security-sensitive code, config, and docs require secops review.
+/SECURITY.md @theclaw/secops
+/.github/dependabot.yml @theclaw/secops
+/.github/codeql/ @theclaw/secops
+/.github/workflows/codeql.yml @theclaw/secops
+/.github/workflows/codeql-android-critical-security.yml @theclaw/secops
+/.github/workflows/codeql-critical-quality.yml @theclaw/secops
+/src/security/ @theclaw/secops
+/src/secrets/ @theclaw/secops
+/src/config/*secret*.ts @theclaw/secops
+/src/config/**/*secret*.ts @theclaw/secops
+/src/gateway/*auth*.ts @theclaw/secops
+/src/gateway/**/*auth*.ts @theclaw/secops
+/src/gateway/*secret*.ts @theclaw/secops
+/src/gateway/**/*secret*.ts @theclaw/secops
+/src/gateway/security-path*.ts @theclaw/secops
+/src/gateway/resolve-configured-secret-input-string*.ts @theclaw/secops
+/src/gateway/protocol/**/*secret*.ts @theclaw/secops
+/src/gateway/server-methods/secrets*.ts @theclaw/secops
+/src/agents/*auth*.ts @theclaw/secops
+/src/agents/**/*auth*.ts @theclaw/secops
+/src/agents/auth-profiles*.ts @theclaw/secops
+/src/agents/auth-health*.ts @theclaw/secops
+/src/agents/auth-profiles/ @theclaw/secops
+/src/agents/sandbox.ts @theclaw/secops
+/src/agents/sandbox-*.ts @theclaw/secops
+/src/agents/sandbox/ @theclaw/secops
+/src/infra/secret-file*.ts @theclaw/secops
+/src/cron/stagger.ts @theclaw/secops
+/src/cron/service/jobs.ts @theclaw/secops
+/docs/security/ @theclaw/secops
+/docs/gateway/authentication.md @theclaw/secops
+/docs/gateway/sandbox-vs-tool-policy-vs-elevated.md @theclaw/secops
+/docs/gateway/sandboxing.md @theclaw/secops
+/docs/gateway/secrets-plan-contract.md @theclaw/secops
+/docs/gateway/secrets.md @theclaw/secops
+/docs/gateway/security/ @theclaw/secops
+/docs/cli/approvals.md @theclaw/secops
+/docs/cli/sandbox.md @theclaw/secops
+/docs/cli/security.md @theclaw/secops
+/docs/cli/secrets.md @theclaw/secops
+/docs/reference/secretref-credential-surface.md @theclaw/secops
+/docs/reference/secretref-user-supplied-credentials-matrix.json @theclaw/secops
+
+# Release workflow and its supporting release-path checks.
+/.github/workflows/theclaw-npm-release.yml @theclaw/theclaw-release-managers
+/docs/reference/RELEASING.md @theclaw/theclaw-release-managers
+/scripts/theclaw-npm-publish.sh @theclaw/theclaw-release-managers
+/scripts/theclaw-npm-release-check.ts @theclaw/theclaw-release-managers
+/scripts/release-check.ts @theclaw/theclaw-release-managers
