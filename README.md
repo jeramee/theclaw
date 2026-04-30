@@ -19,6 +19,14 @@ This is not “The Claw” as a wrestling hold.
 
 This is `theclaw`: a practical local-runtime rename experiment for cloning an upstream tool and giving it a separate command, package identity, runtime home, and heartbeat.
 
+For the original upstream documentation preserved with this snapshot, see:
+
+[Open Claw style README with the renames for simplicity.](README.openclaw-original.md)
+
+For the most up-to-date upstream OpenClaw project, see:
+
+[openclaw/openclaw on GitHub](https://github.com/openclaw/openclaw)
+
 The basic idea is simple:
 
 ```text
@@ -37,13 +45,40 @@ No committee required.
 
 ---
 
+## The Short Version
+
+If you want a clean public snapshot and do not want to publish inherited upstream history, do not accidentally push the original `.git` folder.
+
+The careful version is:
+
+```text
+copy the renamed working tree into a fresh folder without .git
+initialize a new repository
+commit one clean snapshot
+push that clean snapshot
+```
+
+The plain-English version is:
+
+```text
+delete .git from the publish copy
+make a new git repo
+go from there
+```
+
+Git is powerful, but publishing a renamed runtime can get annoying fast if you accidentally carry old history, old remotes, old author metadata, or generated build artifacts.
+
+For this use case, a clean snapshot repo is often less painful than trying to surgically repair inherited history.
+
+---
+
 ## Dedication
 
 Dedicated to the hard-working men and women of old-school professional wrestling:
 
-the grapplers, bump-takers, road warriors, carnival philosophers, and ring generals who understood something modern software occasionally forgets:
+The grapplers, bump-takers, road warriors, carnival philosophers, and ring generals who understood something modern software occasionally forgets:
 
-sometimes the answer is not another abstraction layer.
+Sometimes the answer is not another abstraction layer.
 
 Sometimes you do not negotiate with namespace sprawl.
 
@@ -148,6 +183,24 @@ It rewrites text/source/config/doc files, renames tracked paths, refreshes the t
 Binary file contents are not rewritten, because corrupting images, fonts, archives, databases, compiled assets, APKs, or SQLite files is how a simple script turns into a crime scene.
 
 Binary filenames can still be renamed when the path itself contains a replacement token.
+
+---
+
+## Image and Binary Asset Note
+
+The script does not rewrite binary file contents.
+
+That is intentional.
+
+Replacing bytes inside PNG, JPG, ICO, font, archive, SQLite, APK, compiled, or packaged files can corrupt them.
+
+If an image visibly contains old branding, replace or regenerate the image manually. If a binary filename contains an old token, the tracked path can still be renamed safely.
+
+This repo may still contain upstream-style icons or assets. I am doing my best to replace anything that would confuse the identity, but this is an unofficial fork and local-runtime experiment.
+
+I am not trying to replace the work of the people who created OpenClaw.
+
+This is simply another runtime.
 
 ---
 
@@ -259,6 +312,8 @@ It should be tested before install.
 
 It should be run on a fresh clone.
 
+Do not run this against your only copy of a repo.
+
 It should not be pointed at binary file contents unless you enjoy corrupting assets.
 
 It is not a replacement for understanding the upstream project.
@@ -286,6 +341,30 @@ verify CLI entrypoint
 install as separate command
 run with separate runtime home
 ```
+
+---
+
+## Clean Snapshot Publishing
+
+If your goal is to publish a renamed runtime as a clean public snapshot, do not push the inherited upstream `.git` history by accident.
+
+A simple low-friction approach is:
+
+```text
+fresh upstream clone
+run the rename script
+verify the renamed working tree
+copy the renamed tree into a new publish folder without .git
+initialize a fresh repo
+commit one clean snapshot
+push that clean snapshot
+```
+
+That avoids pushing old upstream commits, stale build artifacts hidden in history, bad author metadata, old remotes, and large object baggage from the original repository.
+
+This is not the right approach if you need a long-term fork with upstream merge history.
+
+It is the practical approach if you want a clean renamed runtime snapshot.
 
 The claw has a mind of its own.
 

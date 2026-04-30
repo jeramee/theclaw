@@ -1,20 +1,22 @@
-# 🦞 TheClaw — Personal AI Assistant
+# 🦀 TheClaw — Personal AI Assistant
 
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/theclaw-logo-text-dark.svg">
-        <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/theclaw-logo-text.svg" alt="TheClaw" width="500">
+        <source media="(prefers-color-scheme: light)" srcset="docs/assets/theclaw-logo-text-dark.svg">
+        <img src="docs/assets/theclaw-logo-text.svg" alt="TheClaw" width="500">
     </picture>
 </p>
 
 <p align="center">
-  <strong>EXFOLIATE! EXFOLIATE!</strong>
+  <strong>If I wanted any $₹¥₺ out of you, I would just squeeze your head.
+  The Claw!</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/theclaw/theclaw/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/theclaw/theclaw/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
-  <a href="https://github.com/theclaw/theclaw/releases"><img src="https://img.shields.io/github/v/release/theclaw/theclaw?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
-  <a href="https://discord.gg/clawd"><img src="https://img.shields.io/discord/1456350064065904867?label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="Discord"></a>
+  <a href="https://github.com/jeramee/theclaw/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/jeramee/theclaw/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
+  <a href="https://github.com/jeramee/theclaw/releases"><img src="https://img.shields.io/github/v/release/jeramee/theclaw?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
+  <img src="https://img.shields.io/badge/TheClaw-%F0%9F%A6%80%20U%2B1F980-bb1b1b?style=for-the-badge" alt="TheClaw Unicode badge">
+  <img src="https://img.shields.io/badge/Discord-Just%20me%20and%203%20bots-5865F2?logo=discord&logoColor=white&style=for-the-badge" alt="Discord: Just me and 3 bots">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
 
@@ -25,9 +27,11 @@ If you want a personal, single-user assistant that feels local, fast, and always
 
 Supported channels include: WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, BlueBubbles, IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat.
 
-[Website](https://theclaw.ai) · [Docs](https://docs.theclaw.ai) · [Vision](VISION.md) · [DeepWiki](https://deepwiki.com/theclaw/theclaw) · [Getting Started](https://docs.theclaw.ai/start/getting-started) · [Updating](https://docs.theclaw.ai/install/updating) · [Showcase](https://docs.theclaw.ai/start/showcase) · [FAQ](https://docs.theclaw.ai/help/faq) · [Onboarding](https://docs.theclaw.ai/start/wizard) · [Nix](https://github.com/theclaw/nix-theclaw) · [Docker](https://docs.theclaw.ai/install/docker) · [Discord](https://discord.gg/clawd)
+Please refer to the actual OpenClaw support for these:Supported channels include: WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, BlueBubbles, IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat.
 
-New install? Start here: [Getting started](https://docs.theclaw.ai/start/getting-started)
+[Website](https://openclaw.ai) · [Docs](https://docs.openclaw.ai) · [Vision](VISION.md) · [DeepWiki](https://deepwiki.com/openclaw/openclaw) · [Getting Started](https://docs.openclaw.ai/start/getting-started) · [Updating](https://docs.openclaw.ai/install/updating) · [Showcase](https://docs.openclaw.ai/start/showcase) · [FAQ](https://docs.openclaw.ai/help/faq) · [Onboarding](https://docs.openclaw.ai/start/wizard) · [Nix](https://github.com/openclaw/nix-openclaw) · [Docker](https://docs.openclaw.ai/install/docker) · [Discord](https://discord.gg/clawd)
+
+New install? Start here: [Getting started](https://docs.openclaw.ai/start/getting-started)
 
 Preferred setup: run `theclaw onboard` in your terminal.
 TheClaw Onboard guides you step by step through setting up the gateway, workspace, channels, and skills. It is the recommended CLI setup path and works on **macOS, Linux, and Windows (via WSL2; strongly recommended)**.
@@ -35,64 +39,13 @@ Works with npm, pnpm, or bun.
 
 ## Sponsors
 
-<table>
-  <tr>
-    <td align="center" width="16.66%">
-      <a href="https://openai.com/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/openai-light.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/openai.svg" alt="OpenAI" height="28">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="16.66%">
-      <a href="https://github.com/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/github-light.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/github.svg" alt="GitHub" height="28">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="16.66%">
-      <a href="https://www.nvidia.com/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/nvidia.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/nvidia-dark.svg" alt="NVIDIA" height="28">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="16.66%">
-      <a href="https://vercel.com/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/vercel-light.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/vercel.svg" alt="Vercel" height="24">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="16.66%">
-      <a href="https://blacksmith.sh/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/blacksmith-light.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/blacksmith.svg" alt="Blacksmith" height="28">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="16.66%">
-      <a href="https://www.convex.dev/">
-        <picture>
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/convex-light.svg">
-          <img src="https://raw.githubusercontent.com/theclaw/theclaw/main/docs/assets/sponsors/convex.svg" alt="Convex" height="24">
-        </picture>
-      </a>
-    </td>
-  </tr>
-</table>
+I havwe no sponsors, and this is more of a I need another runtime with it's own instruction set. This has been way more work to share it than I thought, but still beats coding a wrapper.
 
 **Subscriptions (OAuth):**
 
 - **[OpenAI](https://openai.com/)** (ChatGPT/Codex)
 
-Model note: while many providers and models are supported, prefer a current flagship model from the provider you trust and already use. See [Onboarding](https://docs.theclaw.ai/start/onboarding).
+Model note: while many providers and models are supported, prefer a current flagship model from the provider you trust and already use. See [Onboarding](https://docs.openclaw.ai/start/onboarding).
 
 ## Install (recommended)
 
@@ -125,59 +78,64 @@ theclaw message send --target +1234567890 --message "Hello from TheClaw"
 theclaw agent --message "Ship checklist" --thinking high
 ```
 
-Upgrading? [Updating guide](https://docs.theclaw.ai/install/updating) (and run `theclaw doctor`).
+Upgrading? You can try running one of the script:
+theclaw_rename_openclaw_clone_v0_5.py
+theclaw_rename_openclaw_clone_v0_6.py
 
-Models config + CLI: [Models](https://docs.theclaw.ai/concepts/models). Auth profile rotation + fallbacks: [Model failover](https://docs.theclaw.ai/concepts/model-failover).
+On a clean copy of Openclaw and then install from there. Results may vary. Not really supported at least by me.
 
-## Security defaults (DM access)
-
-TheClaw connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
-
-Full security guide: [Security](https://docs.theclaw.ai/gateway/security)
+Full security guide: [Security](https://docs.openclaw.ai/gateway/security)
 
 Default behavior on Telegram/WhatsApp/Signal/iMessage/Microsoft Teams/Discord/Google Chat/Slack:
 
 - **DM pairing** (`dmPolicy="pairing"` / `channels.discord.dmPolicy="pairing"` / `channels.slack.dmPolicy="pairing"`; legacy: `channels.discord.dm.policy`, `channels.slack.dm.policy`): unknown senders receive a short pairing code and the bot does not process their message.
-- Approve with: `theclaw pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
+- Approve with: `openclaw pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
+- Public inbound DMs require an explicit opt-in: set `dmPolicy="open"` and include `"*"` in the channel allowlist (`allowFrom` / `channels.discord.allowFrom` / `channels.slack.allowFrom`; legacy: `channels.discord.dm.allowFrom`, `channels.slack.dm.allowFrom`).
+Full security guide: [Security](https://docs.openclaw.ai/gateway/security)
+
+Default behavior on Telegram/WhatsApp/Signal/iMessage/Microsoft Teams/Discord/Google Chat/Slack:
+
+- **DM pairing** (`dmPolicy="pairing"` / `channels.discord.dmPolicy="pairing"` / `channels.slack.dmPolicy="pairing"`; legacy: `channels.discord.dm.policy`, `channels.slack.dm.policy`): unknown senders receive a short pairing code and the bot does not process their message.
+- Approve with: `openclaw pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
 - Public inbound DMs require an explicit opt-in: set `dmPolicy="open"` and include `"*"` in the channel allowlist (`allowFrom` / `channels.discord.allowFrom` / `channels.slack.allowFrom`; legacy: `channels.discord.dm.allowFrom`, `channels.slack.dm.allowFrom`).
 
 Run `theclaw doctor` to surface risky/misconfigured DM policies.
 
 ## Highlights
 
-- **[Local-first Gateway](https://docs.theclaw.ai/gateway)** — single control plane for sessions, channels, tools, and events.
-- **[Multi-channel inbox](https://docs.theclaw.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat, macOS, iOS/Android.
-- **[Multi-agent routing](https://docs.theclaw.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
-- **[Voice Wake](https://docs.theclaw.ai/nodes/voicewake) + [Talk Mode](https://docs.theclaw.ai/nodes/talk)** — wake words on macOS/iOS and continuous voice on Android (ElevenLabs + system TTS fallback).
-- **[Live Canvas](https://docs.theclaw.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.theclaw.ai/platforms/mac/canvas#canvas-a2ui).
-- **[First-class tools](https://docs.theclaw.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
-- **[Companion apps](https://docs.theclaw.ai/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.theclaw.ai/nodes).
-- **[Onboarding](https://docs.theclaw.ai/start/wizard) + [skills](https://docs.theclaw.ai/tools/skills)** — onboarding-driven setup with bundled/managed/workspace skills.
+- **[Local-first Gateway](https://docs.openclaw.ai/gateway)** — single control plane for sessions, channels, tools, and events.
+- **[Multi-channel inbox](https://docs.openclaw.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat, macOS, iOS/Android.
+- **[Multi-agent routing](https://docs.openclaw.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
+- **[Voice Wake](https://docs.openclaw.ai/nodes/voicewake) + [Talk Mode](https://docs.openclaw.ai/nodes/talk)** — wake words on macOS/iOS and continuous voice on Android (ElevenLabs + system TTS fallback).
+- **[Live Canvas](https://docs.openclaw.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.openclaw.ai/platforms/mac/canvas#canvas-a2ui).
+- **[First-class tools](https://docs.openclaw.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
+- **[Companion apps](https://docs.openclaw.ai/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.openclaw.ai/nodes).
+- **[Onboarding](https://docs.openclaw.ai/start/wizard) + [skills](https://docs.openclaw.ai/tools/skills)** — onboarding-driven setup with bundled/managed/workspace skills.
 
 ## Security model (important)
 
 - Default: tools run on the host for the `main` session, so the agent has full access when it is just you.
 - Group/channel safety: set `agents.defaults.sandbox.mode: "non-main"` to run non-`main` sessions inside sandboxes. Docker is the default sandbox backend; SSH and OpenShell backends are also available.
 - Typical sandbox default: allow `bash`, `process`, `read`, `write`, `edit`, `sessions_list`, `sessions_history`, `sessions_send`, `sessions_spawn`; deny `browser`, `canvas`, `nodes`, `cron`, `discord`, `gateway`.
-- Before exposing anything remotely, read [Security](https://docs.theclaw.ai/gateway/security), [Sandboxing](https://docs.theclaw.ai/gateway/sandboxing), and [Configuration](https://docs.theclaw.ai/gateway/configuration).
+- Before exposing anything remotely, read [Security](https://docs.openclaw.ai/gateway/security), [Sandboxing](https://docs.openclaw.ai/gateway/sandboxing), and [Configuration](https://docs.openclaw.ai/gateway/configuration).
 
 ## Operator quick refs
 
 - Chat commands: `/status`, `/new`, `/reset`, `/compact`, `/think <level>`, `/verbose on|off`, `/trace on|off`, `/usage off|tokens|full`, `/restart`, `/activation mention|always`
 - Session tools: `sessions_list`, `sessions_history`, `sessions_send`
 - Skills registry: [ClawHub](https://clawhub.ai)
-- Architecture overview: [Architecture](https://docs.theclaw.ai/concepts/architecture)
+- Architecture overview: [Architecture](https://docs.openclaw.ai/concepts/architecture)
 
 ## Docs by goal
 
-- New here: [Getting started](https://docs.theclaw.ai/start/getting-started), [Onboarding](https://docs.theclaw.ai/start/wizard), [Updating](https://docs.theclaw.ai/install/updating)
-- Channel setup: [Channels index](https://docs.theclaw.ai/channels), [WhatsApp](https://docs.theclaw.ai/channels/whatsapp), [Telegram](https://docs.theclaw.ai/channels/telegram), [Discord](https://docs.theclaw.ai/channels/discord), [Slack](https://docs.theclaw.ai/channels/slack)
-- Apps + nodes: [macOS](https://docs.theclaw.ai/platforms/macos), [iOS](https://docs.theclaw.ai/platforms/ios), [Android](https://docs.theclaw.ai/platforms/android), [Nodes](https://docs.theclaw.ai/nodes)
-- Config + security: [Configuration](https://docs.theclaw.ai/gateway/configuration), [Security](https://docs.theclaw.ai/gateway/security), [Sandboxing](https://docs.theclaw.ai/gateway/sandboxing)
-- Remote + web: [Gateway](https://docs.theclaw.ai/gateway), [Remote access](https://docs.theclaw.ai/gateway/remote), [Tailscale](https://docs.theclaw.ai/gateway/tailscale), [Web surfaces](https://docs.theclaw.ai/web)
-- Tools + automation: [Tools](https://docs.theclaw.ai/tools), [Skills](https://docs.theclaw.ai/tools/skills), [Cron jobs](https://docs.theclaw.ai/automation/cron-jobs), [Webhooks](https://docs.theclaw.ai/automation/webhook), [Gmail Pub/Sub](https://docs.theclaw.ai/automation/gmail-pubsub)
-- Internals: [Architecture](https://docs.theclaw.ai/concepts/architecture), [Agent](https://docs.theclaw.ai/concepts/agent), [Session model](https://docs.theclaw.ai/concepts/session), [Gateway protocol](https://docs.theclaw.ai/reference/rpc)
-- Troubleshooting: [Channel troubleshooting](https://docs.theclaw.ai/channels/troubleshooting), [Logging](https://docs.theclaw.ai/logging), [Docs home](https://docs.theclaw.ai)
+- New here: [Getting started](https://docs.openclaw.ai/start/getting-started), [Onboarding](https://docs.openclaw.ai/start/wizard), [Updating](https://docs.openclaw.ai/install/updating)
+- Channel setup: [Channels index](https://docs.openclaw.ai/channels), [WhatsApp](https://docs.openclaw.ai/channels/whatsapp), [Telegram](https://docs.openclaw.ai/channels/telegram), [Discord](https://docs.openclaw.ai/channels/discord), [Slack](https://docs.openclaw.ai/channels/slack)
+- Apps + nodes: [macOS](https://docs.openclaw.ai/platforms/macos), [iOS](https://docs.openclaw.ai/platforms/ios), [Android](https://docs.openclaw.ai/platforms/android), [Nodes](https://docs.openclaw.ai/nodes)
+- Config + security: [Configuration](https://docs.openclaw.ai/gateway/configuration), [Security](https://docs.openclaw.ai/gateway/security), [Sandboxing](https://docs.openclaw.ai/gateway/sandboxing)
+- Remote + web: [Gateway](https://docs.openclaw.ai/gateway), [Remote access](https://docs.openclaw.ai/gateway/remote), [Tailscale](https://docs.openclaw.ai/gateway/tailscale), [Web surfaces](https://docs.openclaw.ai/web)
+- Tools + automation: [Tools](https://docs.openclaw.ai/tools), [Skills](https://docs.openclaw.ai/tools/skills), [Cron jobs](https://docs.openclaw.ai/automation/cron-jobs), [Webhooks](https://docs.openclaw.ai/automation/webhook), [Gmail Pub/Sub](https://docs.openclaw.ai/automation/gmail-pubsub)
+- Internals: [Architecture](https://docs.openclaw.ai/concepts/architecture), [Agent](https://docs.openclaw.ai/concepts/agent), [Session model](https://docs.openclaw.ai/concepts/session), [Gateway protocol](https://docs.openclaw.ai/reference/rpc)
+- Troubleshooting: [Channel troubleshooting](https://docs.openclaw.ai/channels/troubleshooting), [Logging](https://docs.openclaw.ai/logging), [Docs home](https://docs.openclaw.ai)
 
 ## Apps (optional)
 
@@ -200,13 +158,13 @@ Note: signed builds required for macOS permissions to stick across rebuilds (see
 - Voice trigger forwarding + Canvas surface.
 - Controlled via `theclaw nodes …`.
 
-Runbook: [iOS connect](https://docs.theclaw.ai/platforms/ios).
+Runbook: [iOS connect](https://docs.openclaw.ai/platforms/ios).
 
 ### Android node (optional)
 
 - Pairs as a WS node via device pairing (`theclaw devices ...`).
 - Exposes Connect/Chat/Voice tabs plus Canvas, Camera, Screen capture, and Android device command families.
-- Runbook: [Android connect](https://docs.theclaw.ai/platforms/android).
+- Runbook: [Android connect](https://docs.openclaw.ai/platforms/android).
 
 ## From source (development)
 
@@ -248,7 +206,7 @@ Note: `pnpm theclaw ...` runs TypeScript directly (via `tsx`). `pnpm build` prod
 - **dev**: moving head of `main`, npm dist-tag `dev` (when published).
 
 Switch channels (git + npm): `theclaw update --channel stable|beta|dev`.
-Details: [Development channels](https://docs.theclaw.ai/install/development-channels).
+Details: [Development channels](https://docs.openclaw.ai/install/development-channels).
 
 ## Agent workspace + skills
 
@@ -268,26 +226,30 @@ Minimal `~/.theclaw/theclaw.json` (model + defaults):
 }
 ```
 
-[Full configuration reference (all keys + examples).](https://docs.theclaw.ai/gateway/configuration)
+[Full configuration reference (all keys + examples).](https://docs.openclaw.ai/gateway/configuration)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=theclaw/theclaw&type=date&legend=top-left)](https://www.star-history.com/#theclaw/theclaw&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=openclaw/openclaw&type=date&legend=top-left)](https://www.star-history.com/#openclaw/openclaw&type=date&legend=top-left)
 
 ## Molty
 
-TheClaw was built for **Molty**, a space lobster AI assistant. 🦞
+OpenClaw was built for **Molty**, a space lobster AI assistant. 🦞
 by Peter Steinberger and the community.
 
-- [theclaw.ai](https://theclaw.ai)
+- [openclaw.ai](https://openclaw.ai)
 - [soul.md](https://soul.md)
 - [steipete.me](https://steipete.me)
-- [@theclaw](https://x.com/theclaw)
+- [@openclaw](https://x.com/openclaw)
 
 ## Community
 
+OpenClaws readme says this:
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, maintainers, and how to submit PRs.
 AI/vibe-coded PRs welcome! 🤖
+
+I most certainly do not vibe code. I unit test everything and spend most of my time writing validation scripts. If you want to also do the most boring thing on earth. Send a pull request I guess because my email is private, and I actually lied my discord is not me and 3 bots, it is me and 5 bots... but 3 sounded better.
 
 Special thanks to [Mario Zechner](https://mariozechner.at/) for his support and for
 [pi-mono](https://github.com/badlogic/pi-mono).
@@ -296,6 +258,8 @@ Special thanks to Adam Doppelt for the lobster.bot domain.
 Thanks to all clawtributors:
 
 <!-- clawtributors:start -->
+
+Would add myself here, but I just wrote a little do next to nothing script and I am standing on top of the giants here:
 
 [![steipete](https://avatars.githubusercontent.com/u/58493?v=4&s=48)](https://github.com/steipete) [![vincentkoc](https://avatars.githubusercontent.com/u/25068?v=4&s=48)](https://github.com/vincentkoc) [![Takhoffman](https://avatars.githubusercontent.com/u/781889?v=4&s=48)](https://github.com/Takhoffman) [![obviyus](https://avatars.githubusercontent.com/u/22031114?v=4&s=48)](https://github.com/obviyus) [![gumadeiras](https://avatars.githubusercontent.com/u/5599352?v=4&s=48)](https://github.com/gumadeiras) [![Mariano Belinky](https://avatars.githubusercontent.com/u/132747814?v=4&s=48)](https://github.com/mbelinky) [![vignesh07](https://avatars.githubusercontent.com/u/1436853?v=4&s=48)](https://github.com/vignesh07) [![joshavant](https://avatars.githubusercontent.com/u/830519?v=4&s=48)](https://github.com/joshavant) [![scoootscooob](https://avatars.githubusercontent.com/u/167050519?v=4&s=48)](https://github.com/scoootscooob) [![jacobtomlinson](https://avatars.githubusercontent.com/u/1610850?v=4&s=48)](https://github.com/jacobtomlinson)
 [![shakkernerd](https://avatars.githubusercontent.com/u/165377636?v=4&s=48)](https://github.com/shakkernerd) [![sebslight](https://avatars.githubusercontent.com/u/19554889?v=4&s=48)](https://github.com/sebslight) [![tyler6204](https://avatars.githubusercontent.com/u/64381258?v=4&s=48)](https://github.com/tyler6204) [![ngutman](https://avatars.githubusercontent.com/u/1540134?v=4&s=48)](https://github.com/ngutman) [![thewilloftheshadow](https://avatars.githubusercontent.com/u/35580099?v=4&s=48)](https://github.com/thewilloftheshadow) [![Sid-Qin](https://avatars.githubusercontent.com/u/201593046?v=4&s=48)](https://github.com/Sid-Qin) [![mcaxtr](https://avatars.githubusercontent.com/u/7562095?v=4&s=48)](https://github.com/mcaxtr) [![eleqtrizit](https://avatars.githubusercontent.com/u/31522568?v=4&s=48)](https://github.com/eleqtrizit) [![BunsDev](https://avatars.githubusercontent.com/u/68980965?v=4&s=48)](https://github.com/BunsDev) [![cpojer](https://avatars.githubusercontent.com/u/13352?v=4&s=48)](https://github.com/cpojer)
