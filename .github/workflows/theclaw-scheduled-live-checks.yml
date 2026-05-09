@@ -1,8 +1,6 @@
-name: TheClaw Scheduled Live And E2E Checks
+name: TheClaw On-Demand Live And E2E Checks
 
 on:
-  schedule:
-    - cron: "23 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,7 +9,7 @@ permissions:
   pull-requests: read
 
 concurrency:
-  group: theclaw-scheduled-live-checks-${{ github.ref }}
+  group: theclaw-on-demand-live-e2e-checks-${{ github.ref }}
   cancel-in-progress: false
 
 env:
