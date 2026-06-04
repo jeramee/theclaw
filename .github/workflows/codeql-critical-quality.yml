@@ -29,13 +29,13 @@ jobs:
           submodules: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           languages: javascript-typescript
           config-file: ./.github/codeql/codeql-javascript-typescript-critical-quality.yml
 
       - name: Analyze
-        uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           category: "/codeql-critical-quality/javascript-typescript"
 
@@ -50,13 +50,13 @@ jobs:
           submodules: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           languages: javascript-typescript
           config-file: ./.github/codeql/codeql-config-boundary-critical-quality.yml
 
       - name: Analyze
-        uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           category: "/codeql-critical-quality/config-boundary"
 
@@ -71,13 +71,13 @@ jobs:
           submodules: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           languages: javascript-typescript
           config-file: ./.github/codeql/codeql-gateway-runtime-boundary-critical-quality.yml
 
       - name: Analyze
-        uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           category: "/codeql-critical-quality/gateway-runtime-boundary"
 
@@ -92,13 +92,13 @@ jobs:
           submodules: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           languages: javascript-typescript
           config-file: ./.github/codeql/codeql-channel-runtime-boundary-critical-quality.yml
 
       - name: Analyze
-        uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           category: "/codeql-critical-quality/channel-runtime-boundary"
 
@@ -113,12 +113,12 @@ jobs:
           submodules: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           languages: javascript-typescript
           config-file: ./.github/codeql/codeql-plugin-boundary-critical-quality.yml
 
       - name: Analyze
-        uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4
         with:
           category: "/codeql-critical-quality/plugin-boundary"
